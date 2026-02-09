@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Scene, Assets, GenerationSettings, AspectRatio, Quality, AssetData, ProductContext } from './types';
 import AssetUploader from './components/AssetUploader';
 import StoryboardCard from './components/StoryboardCard';
+import { ApiKeySettings } from './components/ApiKeySettings';
 import { splitPromptIntoScenes, generateSceneImage, generateProductTailoredPrompt, generatePromptsFromAssets } from './services/geminiService';
 
 // ==========================================
@@ -929,8 +930,13 @@ const App: React.FC = () => {
     }
   };
 
+  const handleApiKeyChange = (key: string) => {
+    console.log('API Key updated:', key ? 'Set' : 'Cleared');
+  };
+
   return (
     <div className="flex h-screen bg-slate-950 text-slate-100 selection:bg-indigo-500/30 overflow-hidden relative">
+      <ApiKeySettings onApiKeyChange={handleApiKeyChange} />
       {zoomedImage && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-2xl animate-fade-in" onClick={() => setZoomedImage(null)}>
           <button className="absolute top-8 right-8 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all z-[110]" onClick={() => setZoomedImage(null)}>

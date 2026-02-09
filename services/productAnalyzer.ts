@@ -33,7 +33,11 @@ export interface ProductIdentity {
  * @returns ProductIdentity object with detailed product characteristics
  */
 export const analyzeProductIdentity = async (assets: Assets): Promise<ProductIdentity> => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = typeof window !== 'undefined' && localStorage.getItem('gemini_api_key')
+        ? localStorage.getItem('gemini_api_key')!.trim()
+        : (import.meta.env as any).VITE_GEMINI_API_KEY || (import.meta.env as any).GEMINI_API_KEY;
+
+    const ai = new GoogleGenAI({ apiKey });
 
     const parts: any[] = [];
 
